@@ -1,4 +1,3 @@
-import { configs } from "eslint-plugin-prettier";
 import { CSRF_TOKEN } from "./csrf_token.js";
 
 function handleResponse(response) {
@@ -13,7 +12,7 @@ function handleResponse(response) {
 
 function apiService(endpoint, method, data) {
     const config = {
-        methods: method || "GET",
+        method: method || "GET",
         body: data !== undefined ? JSON.stringify(data) : null,
         headers: {
             "content-type": "application/json",

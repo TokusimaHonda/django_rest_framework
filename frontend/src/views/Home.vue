@@ -12,6 +12,15 @@
         </h2>
         <p>{{ job.job_title }}</p>
       </div>
+      <div class="my-4">
+        <p v-show="loadingJobs">...loading...</p>
+        <v-btn
+          v-show="next"
+          @click="getJobs"
+          color='success'
+        >Load More
+        </v-btn>
+      </div>
     </v-container>
   </div>
 </template>
@@ -22,14 +31,26 @@ export default {
   name: "home",
   data() {
     return {
-      jobs: []
+      jobs: [],
+      next: null,
+      loadingJobs: false
     }
   },
   methods: {
     getJobs() {
-      let endpoint = 'api/jobs/'
+      let endpoint = '/api/jobs/';
+      if (this.next) {
+        endpoint = this.next;
+      }
+      this.loadingJobs = true;
       apiService(endpoint).then(data => {
         this.jobs.push(...data.results)
+        this.loadingJobs = false;
+        if (data.next) {
+          this.next = data.next;
+        } else {
+          this.next = null
+        }
       })
     }
   },
