@@ -49,7 +49,7 @@ export default {
         if (data.next) {
           this.next = data.next;
         } else {
-          this.next = null
+          this.next = null;
         }
       })
     }
